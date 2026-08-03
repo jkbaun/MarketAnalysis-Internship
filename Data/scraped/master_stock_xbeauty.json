@@ -31589,7 +31589,7 @@
             "2026-07-28": 14,
             "2026-07-29": 14,
             "2026-08-02": 14,
-            "2026-08-03": "Error: ReStock-config script not found"
+            "2026-08-03": 14
         },
         "sale_price": "59.00",
         "barcode": "6976436773532",
@@ -31619,7 +31619,7 @@
             "2026-07-28": 4,
             "2026-07-29": 4,
             "2026-08-02": 4,
-            "2026-08-03": "Error: ReStock-config script not found"
+            "2026-08-03": 4
         },
         "sale_price": "49.00",
         "barcode": "6976436771576",
@@ -31679,7 +31679,7 @@
             "2026-07-28": 2,
             "2026-07-29": 2,
             "2026-08-02": 2,
-            "2026-08-03": "Error: ReStock-config script not found"
+            "2026-08-03": 2
         },
         "sale_price": "43.00",
         "barcode": "6976436770500",
@@ -31709,7 +31709,7 @@
             "2026-07-28": 4,
             "2026-07-29": 4,
             "2026-08-02": 4,
-            "2026-08-03": "Error: ReStock-config script not found"
+            "2026-08-03": 4
         },
         "sale_price": "59.00",
         "barcode": "6976436773624",
@@ -31739,7 +31739,7 @@
             "2026-07-28": 12,
             "2026-07-29": 12,
             "2026-08-02": 12,
-            "2026-08-03": "Error: ReStock-config script not found"
+            "2026-08-03": 12
         },
         "sale_price": "59.00",
         "barcode": "6976436773983",
@@ -31769,7 +31769,7 @@
             "2026-07-28": 9,
             "2026-07-29": 9,
             "2026-08-02": 9,
-            "2026-08-03": "Error: ReStock-config script not found"
+            "2026-08-03": 9
         },
         "sale_price": "39.00",
         "barcode": "6975242800418",
@@ -31799,7 +31799,7 @@
             "2026-07-28": 6,
             "2026-07-29": 6,
             "2026-08-02": 6,
-            "2026-08-03": "Error: ReStock-config script not found"
+            "2026-08-03": 6
         },
         "sale_price": "55.00",
         "barcode": "6975242803792",
@@ -31829,7 +31829,7 @@
             "2026-07-28": 7,
             "2026-07-29": 7,
             "2026-08-02": 6,
-            "2026-08-03": "Error: ReStock-config script not found"
+            "2026-08-03": 6
         },
         "sale_price": "39.00",
         "barcode": "6972786995983",
@@ -31859,7 +31859,7 @@
             "2026-07-28": 13,
             "2026-07-29": 13,
             "2026-08-02": 13,
-            "2026-08-03": "Error: ReStock-config script not found"
+            "2026-08-03": 13
         },
         "sale_price": "59.00",
         "barcode": "6976436773525",
@@ -31889,7 +31889,7 @@
             "2026-07-28": "Error: ReStock-config script not found",
             "2026-07-29": 6,
             "2026-08-02": 6,
-            "2026-08-03": "Error: ReStock-config script not found"
+            "2026-08-03": 6
         },
         "sale_price": "59.00",
         "barcode": "6976436774003",
@@ -31919,7 +31919,7 @@
             "2026-07-28": "Error: ReStock-config script not found",
             "2026-07-29": 7,
             "2026-08-02": 6,
-            "2026-08-03": "Error: ReStock-config script not found"
+            "2026-08-03": 6
         },
         "sale_price": "39.00",
         "barcode": "6977487730666",
@@ -31949,7 +31949,7 @@
             "2026-07-28": "Error: ReStock-config script not found",
             "2026-07-29": 6,
             "2026-08-02": 6,
-            "2026-08-03": "Error: ReStock-config script not found"
+            "2026-08-03": 6
         },
         "sale_price": "39.00",
         "barcode": "6971053499568",
@@ -31979,7 +31979,7 @@
             "2026-07-28": "Error: ReStock-config script not found",
             "2026-07-29": 8,
             "2026-08-02": 8,
-            "2026-08-03": "Error: ReStock-config script not found"
+            "2026-08-03": 8
         },
         "sale_price": "45.00",
         "barcode": "6977487730031",
@@ -32009,7 +32009,7 @@
             "2026-07-28": "Error: ReStock-config script not found",
             "2026-07-29": 6,
             "2026-08-02": 6,
-            "2026-08-03": "Error: ReStock-config script not found"
+            "2026-08-03": 6
         },
         "sale_price": "45.00",
         "barcode": "6977487730086",
@@ -32039,7 +32039,7 @@
             "2026-07-28": "Error: ReStock-config script not found",
             "2026-07-29": 7,
             "2026-08-02": 7,
-            "2026-08-03": "Error: ReStock-config script not found"
+            "2026-08-03": 7
         },
         "sale_price": "59.00",
         "barcode": "6977487730611",
@@ -32069,7 +32069,7 @@
             "2026-07-28": "Error: ReStock-config script not found",
             "2026-07-29": 8,
             "2026-08-02": 8,
-            "2026-08-03": "Error: ReStock-config script not found"
+            "2026-08-03": 8
         },
         "sale_price": "59.00",
         "barcode": "6977487730628",
@@ -32099,7 +32099,7 @@
             "2026-07-28": "Error: ReStock-config script not found",
             "2026-07-29": 7,
             "2026-08-02": 7,
-            "2026-08-03": "Error: ReStock-config script not found"
+            "2026-08-03": 7
         },
         "sale_price": "45.00",
         "barcode": "6977487730314",
@@ -32129,7 +32129,7 @@
             "2026-07-28": "Error: ReStock-config script not found",
             "2026-07-29": 8,
             "2026-08-02": 8,
-            "2026-08-03": "Error: ReStock-config script not found"
+            "2026-08-03": 8
         },
         "sale_price": "45.00",
         "barcode": "6977487730581",
@@ -32159,7 +32159,7 @@
             "2026-07-28": "Error: ReStock-config script not found",
             "2026-07-29": 7,
             "2026-08-02": 7,
-            "2026-08-03": "Error: ReStock-config script not found"
+            "2026-08-03": 7
         },
         "sale_price": "49.00",
         "barcode": "6977487730673",
@@ -32240,7 +32240,7 @@
             "2026-07-28": "Error: ReStock-config script not found",
             "2026-07-29": 8,
             "2026-08-02": 8,
-            "2026-08-03": "Error: ReStock-config script not found"
+            "2026-08-03": 8
         },
         "sale_price": "39.00",
         "barcode": null,
