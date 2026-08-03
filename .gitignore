@@ -6,3 +6,6 @@ __pycache__/
 *.pyc
 *.pyo
 Reports/output/*.xlsx
+Data/
+*.db
+*.json
