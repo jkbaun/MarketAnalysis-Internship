@@ -6,21 +6,21 @@ import os
 from playwright.async_api import async_playwright
 from datetime import datetime
 import helper
-
 import argparse
 
 # Parse incoming arguments passed by master-v2.py or fallback to defaults
 parser = argparse.ArgumentParser()
-parser.add_argument("--tasks", type=int, default=40, help="Concurrent Playwright workers")
+parser.add_argument("--tasks", type=int, default=20, help="Concurrent Playwright workers")
 parser.add_argument("--retries", type=int, default=5, help="Max retry attempts per product")
 args, _ = parser.parse_known_args()
 
 CONCURRENT_TASKS = args.tasks
 MAX_RETRIES = args.retries
 
-base_url = "https://xbeauty.me"  # (keep site-specific URL here)
+base_url = "https://xbeauty.me" # Remove on refactor, pass thru config file (keep site-specific URL here)
 stock_filename, products_filename = helper.generate_filenames(base_url)
 PROGRESS_FILE = stock_filename
+
 # Load products
 with open(products_filename, 'r', encoding='utf-8') as f:
     products = json.load(f)
@@ -37,8 +37,15 @@ if os.path.exists(PROGRESS_FILE):
     except Exception as e:
         print(f"Error loading checkpoint, starting fresh: {e}")
 
-def save_progress():
-    """Helper to dump current progress safely."""
+# --- FIX 1: Async Lock for thread-safe saving ---
+save_lock = asyncio.Lock()
+
+async def save_progress():
+    """Helper to dump current progress safely without blocking the event loop."""
+    async with save_lock:
+        await asyncio.to_thread(_write_json)
+
+def _write_json():
     with open(PROGRESS_FILE, 'w', encoding='utf-8') as f:
         json.dump(list(scraped_data.values()), f, ensure_ascii=False, indent=4)
 
@@ -82,7 +89,7 @@ async def scrape_product(page, product, full_catalog=True):
                             item_info["barcode"] = full_variants[0].get("barcode", "N/A")
                             # We can also guarantee the SKU is captured perfectly here
                             item_info["sku"] = full_variants[0].get("sku", item_info.get("sku", "N/A"))
-            # Container to capture our target API data
+            
             # Container to capture our target API data
             intercepted_data = {}
 
@@ -97,19 +104,19 @@ async def scrape_product(page, product, full_catalog=True):
             # Attach listener
             page.on("response", capture_json)
 
-            # --- THE FIX ---
-            # 1. Change to 'domcontentloaded' so the page doesn't hang on background trackers
-            await page.goto(url, wait_until="domcontentloaded", timeout=15000)
+            # --- FIX 2: Try/Finally to prevent memory leaks ---
+            try:
+                # 1. Change to 'domcontentloaded' so the page doesn't hang on background trackers
+                await page.goto(url, wait_until="domcontentloaded", timeout=15000)
 
-            # 2. Gracefully wait up to 3 seconds for the specific MoniCommerce API to fire.
-            # It checks every 0.5s. If the API responds instantly, it breaks early and saves time!
-            for _ in range(6):
-                if "json" in intercepted_data:
-                    break
-                await asyncio.sleep(0.5)
-
-            # Remove listener immediately to prevent memory leaks across iterations
-            page.remove_listener("response", capture_json)
+                # 2. Gracefully wait up to 3 seconds for the specific MoniCommerce API to fire.
+                for _ in range(6):
+                    if "json" in intercepted_data:
+                        break
+                    await asyncio.sleep(0.5)
+            finally:
+                # Remove listener immediately to prevent memory leaks across iterations
+                page.remove_listener("response", capture_json)
 
             # --- METHOD 1: Clean API Interception ---
             if "json" in intercepted_data and intercepted_data["json"].get("variants"):
@@ -131,7 +138,6 @@ async def scrape_product(page, product, full_catalog=True):
                 break
             
             # --- METHOD 3: Fallback to HTML Regex extraction ---
-            # NOT TESTED YET
             try:
                 # Wait up to 3 seconds for the element to appear in the DOM
                 script_element = await page.wait_for_selector('#ReStock-config', timeout=3000)
@@ -161,7 +167,6 @@ async def main():
         
         today_str = datetime.now().strftime("%Y-%m-%d")
         
-        # Filter products needing work (Using the Error-revisit logic!)
         # Filter products needing work (Targeting specifically ReStock-config errors)
         todo_products = []
         for p_item in products:
@@ -193,12 +198,13 @@ async def main():
                     if res:
                         url, item_info = res
                         scraped_data[url] = item_info
+                        # --- FIX 3: Save immediately after every successful item ---
+                        await save_progress()
 
                 await page.close()
-                save_progress()
                 await asyncio.sleep(random.uniform(2.0, 4.0))
                 
-        # Launch exactly 5 permanent workers concurrently
+        # Launch permanent workers concurrently based on argparse
         workers = [worker() for _ in range(CONCURRENT_TASKS)]
         await asyncio.gather(*workers)
         
