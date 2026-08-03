@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Variant Manager - BBK</title>
+</head>
+<body>
+    <header>
+        <h1>Barcode Variant Scanner</h1>
+        <a href="/">Back to Invoices</a>
+    </header>
+    
+    <form method="POST" action="/update-variants">
+        <!-- Staging area for barcode scanning -->
+        <div id="item-staging" style="margin-bottom: 20px; margin-top: 20px;">
+            <h3>Scan or Search Variant</h3>
+            <label>Scan Barcode:</label>
+            <input type="text" id="item-search" list="item-list" placeholder="Scan barcode..." autocomplete="off" autofocus>
+            <datalist id="item-list">
+                {% for variant in variants %}
+                    <option value="{{ variant.variant_barcode }}">{{ variant.product.product_title }}</option>
+                {% endfor %}
+            </datalist>
+            
+            <button type="button" id="btn-add-item">Lookup</button>
+        </div>
+
+        <table id="variant-grid" style="width: 100%; text-align: left;">
+            <thead>
+                <tr>
+                    <th>Barcode</th>
+                    <th>Product Name</th>
+                    <th>Variant Title</th>
+                    <th>SKU (Editable)</th>
+                    <th>Scan Count</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Rows injected here by JS -->
+            </tbody>
+        </table>
+        
+        <br>
+        <button type="submit">Save Variant Updates</button>
+    </form>
+
+<script>
+// 1. Injected Jinja lookup table for product variants
+const variantsData = {
+    {% for v in variants %}
+    "{{ v.variant_barcode }}": {
+        id: {{ v.variant_id }},
+        productName: "{{ v.product.product_title | replace('"', '\\"') if v.product else 'Unknown' }}",
+        variantTitle: "{{ v.variant_title | replace('"', '\\"') }}",
+        sku: "{{ v.sku or '' }}"
+    },
+    {% endfor %}
+};
+
+// DOM References
+const tbody = document.querySelector('#variant-grid tbody');
+const searchInput = document.getElementById('item-search');
+const btnAddItem = document.getElementById('btn-add-item');
+
+// 2. Helper to append rows to the table grid
+function addRowToGrid(barcode, productName, variantTitle, sku, variantId, prepend = false) {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+        <td><input type="text" name="barcode[]" value="${barcode || ''}" readonly style="width: 120px; background: #eee;"></td>
+        <td><input type="text" value="${productName || ''}" readonly style="width: 100%; background: #eee;"></td>
+        <td><input type="text" value="${variantTitle || ''}" readonly style="width: 120px; background: #eee;"></td>
+        <td><input type="text" name="sku[]" value="${sku || ''}" style="width: 120px;"></td>
+        <td><input type="number" name="scan_count[]" value="1" readonly style="width: 60px; text-align: center;"></td>
+        <input type="hidden" name="variant_id[]" value="${variantId || ''}">
+        <td><button type="button" onclick="this.closest('tr').remove()">Remove</button></td>
+    `;
+    
+    if (prepend) {
+        tbody.prepend(tr); // Adds to the TOP of the grid
+    } else {
+        tbody.appendChild(tr); // Adds to the BOTTOM of the grid
+    }
+    
+    return tr;
+}
+
+// 3. Scanner / Input Logic
+btnAddItem.addEventListener('click', processScannedItem);
+
+searchInput.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        e.preventDefault(); // Stop form submission
+        processScannedItem();
+    }
+});
+
+function processScannedItem() {
+    const searchVal = searchInput.value.trim();
+    if (!searchVal) return;
+
+    // A. Check if this barcode ALREADY exists in the table grid
+    const existingInput = document.querySelector(`input[name="barcode[]"][value="${searchVal}"]`);
+
+    if (existingInput) {
+        // Row exists! Grab the entire <tr> element
+        const row = existingInput.closest('tr');
+        
+        // Move it to the top of the table
+        tbody.prepend(row); 
+
+        // Briefly highlight it yellow
+        row.style.transition = "background-color 0.1s";
+        row.style.backgroundColor = "#ffff99"; 
+        setTimeout(() => { 
+            row.style.transition = "background-color 0.5s";
+            row.style.backgroundColor = ""; 
+        }, 300);
+
+        // Increment a "Scan Count" just to show the user it registered the duplicate scan
+        const scanCountInput = row.querySelector('input[name="scan_count[]"]');
+        if (scanCountInput) {
+            scanCountInput.value = parseInt(scanCountInput.value, 10) + 1;
+            scanCountInput.style.backgroundColor = "#28a745"; 
+            scanCountInput.style.color = "white";
+            
+            setTimeout(() => { 
+                scanCountInput.style.backgroundColor = ""; 
+                scanCountInput.style.color = "black";
+            }, 600);
+        }
+
+        searchInput.focus();
+
+    } else {
+        // B. Row does NOT exist. Add it as a NEW row at the top.
+        if (variantsData[searchVal]) {
+            const v = variantsData[searchVal];
+            
+            const newRow = addRowToGrid(searchVal, v.productName, v.variantTitle, v.sku, v.id, true);
+            
+            // Briefly highlight it green
+            newRow.style.transition = "background-color 0.1s";
+            newRow.style.backgroundColor = "#d4edda";
+            setTimeout(() => { 
+                newRow.style.transition = "background-color 0.5s";
+                newRow.style.backgroundColor = ""; 
+            }, 500);
+            
+            searchInput.focus(); 
+        } else {
+            alert("Variant not found in database for that barcode.");
+        }
+    }
+
+    // Reset the search input for the next scan
+    searchInput.value = '';
+}
+</script>
+</body>
+</html>

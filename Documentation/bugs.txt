@@ -1,0 +1,14 @@
+Ingest_invoices.py > BeautyByKat_Inventory.db
+B1T1, Additional Value (1) gets extracted when processing invoice quantity received
+
+BeautyByKat_inventory.db
+Not storing prices properly
+
+1_Scrape
+Clean up/Setup unified Logs.json
+
+2_Unify
+Product Matching + UPK generation needs review
+False Negatives? 
+
+

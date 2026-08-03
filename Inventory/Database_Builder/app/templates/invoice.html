@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BBK Inventory Manager</title>
+</head>
+<body>
+    <header>
+        <h1>BBK Inventory</h1>
+    </header>
+    <form method="POST" action="/submit-invoice">
+    <div class="form_gridheader" id="invoice" style="margin-top: 20px;">
+    <!-- Hidden ID field to tell the backend whether to update or create -->
+    <input type="hidden" name="existing_invoice_id" id="form-invoice-id" value="">
+
+    <label for="invoice_select">Select Existing Invoice</label>
+    <select id="invoice_select">
+        <option value="">-- Select Existing Invoice (or Leave Blank for New) --</option>
+        {% for inv in invoices %}
+            <option value="{{ inv.invoice_id }}">
+                {{ inv.invoice_number }} - {{ inv.vendor_name }} ({{ inv.date_received.strftime('%Y-%m-%d') if inv.date_received else 'No Date' }})
+            </option>
+        {% endfor %}
+    </select>
+
+    <label for="invoice_number">Invoice Number</label>
+    <input type="text" id="invoice_number" name="invoice_number" placeholder="e.g. INV-1001">
+
+    <label for="invoice_vendor">Vendor Name</label>
+    <input type="text" id="invoice_vendor" name="vendor_name" placeholder="Vendor Name">
+
+    <label for="invoice_date">Date Received</label>
+    <input type="date" id="invoice_date" name="date_received">
+
+    <label>Total Cost</label>
+    <h2 id="invoice_cost">$0.00</h2>
+
+    <input type="hidden" name="total_amount" id="form-total-amount" value="0.00">
+</div>
+
+        <hr>
+
+        <!-- Staging area specifically to add items to NEW invoices -->
+        <div id="item-staging" style="margin-bottom: 20px;">
+            <h3>Add Items</h3>
+            <label>Search Item:</label>
+            <input type="text" id="item-search" list="item-list" placeholder="Search by barcode or name..." autocomplete="off">
+            <datalist id="item-list">
+                {% for variant in variants %}
+                    <option value="{{ variant.barcode }}">{{ variant.product.name }}</option>
+                {% endfor %}
+            </datalist>
+            
+            <label>Qty:</label>
+            <input type="number" id="add-qty" value="1" style="width: 60px;">
+            
+            <button type="button" id="btn-add-item">Add to Grid</button>
+        </div>
+
+        <table id="invoice-grid" style="width: 100%; text-align: left;">
+            <thead>
+                <tr>
+                    <th>Barcode</th>
+                    <th>Item Name</th>
+                    <th>Qty Invoiced</th>
+                    <th>Qty Received</th>
+                    <th>Unit Price</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Rows injected here by JS -->
+            </tbody>
+        </table>
+        
+        <br>
+        <button type="submit">Submit Final Invoice Data</button>
+    </form>
+
+
+
+<script>
+    // 1. Injected Jinja lookup table for product variants
+const variantsData = {
+    {% for v in variants %}
+    "{{ v.barcode }}": {
+        id: {{ v.variant_id }},
+        name: "{{ v.product.name }}"
+    },
+    {% endfor %}
+};
+
+// DOM References
+const invoiceSelect = document.getElementById('invoice_select');
+const formInvoiceId = document.getElementById('form-invoice-id');
+const invoiceNumInput = document.getElementById('invoice_number');
+const vendorInput = document.getElementById('invoice_vendor');
+const dateInput = document.getElementById('invoice_date');
+const costHeader = document.getElementById('invoice_cost');
+const tbody = document.querySelector('#invoice-grid tbody');
+const formTotalAmount = document.getElementById('form-total-amount');
+
+// 2. Event listener for Invoice Dropdown selection
+invoiceSelect.addEventListener('change', async (e) => {
+    const selectedId = e.target.value;
+
+    if (!selectedId) {
+        // User selected "-- Select Existing Invoice --" -> Reset form for a NEW invoice
+        formInvoiceId.value = "";
+        invoiceNumInput.value = "";
+        vendorInput.value = "";
+        dateInput.value = "";
+        costHeader.innerText = "$0.00";
+        formTotalAmount.value = "0.00"; // <-- Add this
+        tbody.innerHTML = '';
+        return;
+    }
+
+    // Fetch existing invoice details from backend API
+    try {
+        const response = await fetch(`/api/invoice/${selectedId}`);
+        if (!response.ok) throw new Error("Invoice not found");
+
+        const data = await response.json();
+
+        // Fill Header Fields
+        formInvoiceId.value = data.invoice_id;
+        invoiceNumInput.value = data.invoice_number || '';
+        vendorInput.value = data.vendor_name || '';
+        dateInput.value = data.date_received || '';
+        costHeader.innerText = "BHD" + data.total_amount.toFixed(2);
+        formTotalAmount.value = data.total_amount.toFixed(2);
+
+        // Populate Line Item Grid
+        tbody.innerHTML = ''; // Clear previous grid items
+        data.line_items.forEach(item => {
+            addRowToGrid(
+                item.barcode,
+                item.raw_item_name,
+                item.variant_id,
+                item.qty_invoiced,
+                item.qty_counted,
+                item.unit_price
+            );
+        });
+    } catch (err) {
+        console.error("Error populating invoice details:", err);
+    }
+});
+
+// 3. Helper to append rows to the table grid
+function addRowToGrid(barcode, name, variantId, qtyInvoiced, qtyCounted, unitPrice) {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+        <td><input type="text" name="barcode[]" value="${barcode || ''}" readonly style="width: 120px;"></td>
+        <td><input type="text" name="raw_item_name[]" value="${name || ''}" readonly style="width: 100%;"></td>
+        <td><input type="number" name="qty_invoiced[]" value="${qtyInvoiced}" readonly style="width: 80px;"></td>
+        <td><input type="number" name="qty_counted[]" value="${qtyCounted}" style="background: #eef; width: 80px;"></td>
+        <td><input type="number" name="unit_price[]" value="${unitPrice.toFixed(2)}" step="0.01" style="width: 80px;"></td>
+        <input type="hidden" name="variant_id[]" value="${variantId || ''}">
+        <td><button type="button" onclick="this.closest('tr').remove()">Remove</button></td>
+    `;
+    tbody.appendChild(tr);
+}
+
+// 4. Staging area "Add to Grid" button logic
+document.getElementById('btn-add-item').addEventListener('click', () => {
+    const searchVal = document.getElementById('item-search').value;
+    const qty = parseInt(document.getElementById('add-qty').value, 10) || 1;
+
+    if (variantsData[searchVal]) {
+        const v = variantsData[searchVal];
+        addRowToGrid(searchVal, v.name, v.id, 0, qty, 0.00);
+        
+        // Reset staging inputs
+        document.getElementById('item-search').value = '';
+        document.getElementById('add-qty').value = 1;
+    } else {
+        alert("Please select a valid item barcode from the list.");
+    }
+});
+
+// 3. Helper to append rows to the table grid
+// We added a 'prepend' parameter so we can force rows to the top of the table
+function addRowToGrid(barcode, name, variantId, qtyInvoiced, qtyCounted, unitPrice, prepend = false) {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+        <td><input type="text" name="barcode[]" value="${barcode || ''}" readonly style="width: 120px;"></td>
+        <td><input type="text" name="raw_item_name[]" value="${name || ''}" readonly style="width: 100%;"></td>
+        <td><input type="number" name="qty_invoiced[]" value="${qtyInvoiced}" readonly style="width: 80px;"></td>
+        <td><input type="number" name="qty_counted[]" value="${qtyCounted}" style="background: #eef; width: 80px;"></td>
+        <td><input type="number" name="unit_price[]" value="${unitPrice.toFixed(2)}" step="0.01" style="width: 80px;"></td>
+        <input type="hidden" name="variant_id[]" value="${variantId || ''}">
+        <td><button type="button" onclick="this.closest('tr').remove()">Remove</button></td>
+    `;
+    
+    if (prepend) {
+        tbody.prepend(tr); // Adds to the TOP of the grid
+    } else {
+        tbody.appendChild(tr); // Adds to the BOTTOM of the grid
+    }
+    
+    return tr; // We return the row so we can apply visual highlights to it
+}
+
+// 4. Staging area "Find / Add" logic
+const searchInput = document.getElementById('item-search');
+const btnAddItem = document.getElementById('btn-add-item');
+
+// Run process on Button Click
+btnAddItem.addEventListener('click', processScannedItem);
+
+// Run process on "Enter" key press inside the search bar (perfect for Barcode Scanners)
+searchInput.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        e.preventDefault(); // Stop the form from accidentally submitting
+        processScannedItem();
+    }
+});
+
+function processScannedItem() {
+    const searchVal = searchInput.value.trim();
+    // Grab the qty from the input, default to 1 if empty
+    const qtyToAdd = parseInt(document.getElementById('add-qty').value, 10) || 1;
+
+    if (!searchVal) return;
+
+    // A. Check if this barcode ALREADY exists in the table grid
+    const existingInput = document.querySelector(`input[name="barcode[]"][value="${searchVal}"]`);
+
+    if (existingInput) {
+        // Row exists! Grab the entire <tr> element
+        const row = existingInput.closest('tr');
+        
+        // Move it to the top of the table
+        tbody.prepend(row); 
+
+        // Briefly highlight it yellow so the user sees it jumped up
+        row.style.transition = "background-color 0.1s";
+        row.style.backgroundColor = "#ffff99"; 
+        setTimeout(() => { 
+            row.style.transition = "background-color 0.5s";
+            row.style.backgroundColor = ""; 
+        }, 300);
+
+        // AUTO-INCREMENT LOGIC
+        const qtyCountedInput = row.querySelector('input[name="qty_counted[]"]');
+        if (qtyCountedInput) {
+            const currentQty = parseInt(qtyCountedInput.value, 10) || 0;
+            qtyCountedInput.value = currentQty + qtyToAdd; // Add the scanned qty
+            
+            // Flash the specific Qty box green so the user knows it counted
+            qtyCountedInput.style.transition = "background-color 0.1s";
+            qtyCountedInput.style.backgroundColor = "#28a745"; 
+            qtyCountedInput.style.color = "white";
+            
+            setTimeout(() => { 
+                qtyCountedInput.style.transition = "background-color 0.5s";
+                qtyCountedInput.style.backgroundColor = "#eef"; 
+                qtyCountedInput.style.color = "black";
+            }, 600);
+        }
+
+        // Keep the cursor locked in the search bar for the next scan!
+        searchInput.focus();
+
+    } else {
+        // B. Row does NOT exist. Add it as a NEW row at the top.
+        if (variantsData[searchVal]) {
+            const v = variantsData[searchVal];
+            
+            // Pass 'true' at the end to prepend to the top
+            const newRow = addRowToGrid(searchVal, v.name, v.id, 0, qtyToAdd, 0.00, true);
+            
+            // Briefly highlight it green to signify a new item was added
+            newRow.style.transition = "background-color 0.1s";
+            newRow.style.backgroundColor = "#d4edda";
+            setTimeout(() => { 
+                newRow.style.transition = "background-color 0.5s";
+                newRow.style.backgroundColor = ""; 
+            }, 500);
+            
+            // Keep the cursor locked in the search bar for the next scan!
+            searchInput.focus(); 
+        } else {
+            alert("Item not found. Please select a valid item barcode from the list.");
+        }
+    }
+
+    // Reset the staging inputs so it's clear for the next scan
+    searchInput.value = '';
+    document.getElementById('add-qty').value = 1; 
+}
+</script>
+</body>
+</html>

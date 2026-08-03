@@ -1,0 +1,57 @@
+{
+    "mode": "",
+
+    "audit_inventory": true,
+    "order_files": [
+        "orders_Jan1-July12.csv",
+        "orders_June28-July9th.csv",
+        "orders_July9th-July16th.csv"
+    ],
+    "invoice_files": [
+        {"name": "Luxe Organix Invoice-2.pdf", "invoice_number": "600000007", "date": "2000-01-01"}
+    ],
+    "product_files": [
+        {"filename": "products_june18.csv", "date": "2026-06-18"},
+        {"filename": "products_export_July9th.csv", "date": "2026-07-09"},
+        {"filename": "products_July16th.csv", "date": "2026-07-16"}
+    ],
+
+    "competitors": ["glowin", "sokostore", "xbeauty"],
+    "export_formats": ["xlsx", "csv"],
+    "reports": {
+        "inventory_audit": true,
+        "sales_summary": true,
+        "competitor_price_stock": true,
+        "low_stock_alerts": true,
+        "executive_summary": true
+    },
+
+    "reports_config": {
+        "generate": false,
+        "db_name": "beautybykat_inventory.db",
+        "jobs": [
+            {
+                "type": "financial",
+                "timeframe": "7_days",
+                "end_date": "2026-07-16"
+            },
+            {
+                "type": "inventory",
+                "timeframe": "exact",
+                "start_date": "2026-06-18",
+                "end_date": "2026-07-16"
+            },
+            {
+                "type": "brand_performance",
+                "timeframe": "30_days",
+                "end_date": "2026-07-16"
+            },
+            {
+                "type": "detailed_brand",
+                "timeframe": "exact",
+                "start_date": "2026-07-09",
+                "end_date": "2026-07-16"
+            }
+        ]
+    }
+}

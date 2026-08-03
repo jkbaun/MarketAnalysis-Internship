@@ -1,0 +1,45 @@
+{
+    "scrapper": {
+        "rerun": "false",
+        "last_run": "2026-08-02T13:55:23.039911",
+        "master_scraper": "scraper.py",
+        "stock_scripts": [
+            "stock-soko.py",
+            "stock-xbeauty.py",
+            "stock-glowin.py"
+        ],
+        "max_pipeline_attempts": 15
+    },
+    "targets": {
+        "competitor_urls": [
+            "https://sokostore.com/products.json",
+            "https://xbeauty.me/products.json",
+            "https://glowinbh.com/products.json"
+        ]
+    },
+    "scraping_performance": {
+        "batch_size": 5,
+        "concurrent_tasks": 50,
+        "max_retries": 5,
+        "tcp_limit_per_host": 10,
+        "headless_browser": true,
+        "dom_timeout_ms": 15000
+    },
+    "anti_bot_and_delays": {
+        "min_jitter": 1.5,
+        "max_jitter": 3.8,
+        "retry_cooldown": 5.0,
+        "ua_rotate_after": 5
+    },
+    "reports": [
+        {
+            "generate": true
+        },
+        {
+            "type": "summary"
+        },
+        {
+            "analysis": "competitive"
+        }
+    ]
+}
