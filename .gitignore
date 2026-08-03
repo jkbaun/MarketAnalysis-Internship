@@ -1,11 +1,11 @@
+*.xlsx
+*.json
+*.csv
+*.db
+*.pdf
+*Data/exports/invoice/Luxe Organix Invoice-2.pdf
 /stuff
 /mustafasstuff
-Data/exports/invoice/Luxe Organix Invoice-2.pdf
-*.csv
-__pycache__/
-*.pyc
-*.pyo
-Reports/output/*.xlsx
-Data/
-*.db
-*.json
+Data.zip
+
+!*_config.json
