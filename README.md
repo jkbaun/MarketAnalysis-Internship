@@ -4,6 +4,22 @@
 An end-to-end automated pipeline designed for e-commerce data scraping, inventory reconciliation, entity resolution, and executive reporting. This system coordinates multi-competitor price/stock tracking, parses internal sales orders and supplier invoice PDFs, unifies databases using fuzzy matching, and generates automated financial and inventory audit reports.
 
 ---
+## Setup 
+```bash
+git clone https://github.com/jkbaun/MarketAnalysis-Internship.git
+
+#enviroment setup
+python -m venv venv
+
+venv\Scripts\activate
+
+
+pip install -r requirements.txt
+playwright install chromium
+```
+
+
+---
 
 ## 📌 Critical System Requirements
 
