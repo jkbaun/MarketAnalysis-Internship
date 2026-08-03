@@ -1,5 +1,8 @@
 /stuff
 /mustafasstuff
 Data/exports/invoice/Luxe Organix Invoice-2.pdf
-Data/exports/products_orders
-Data/exports
+# Ignore everything inside the products_orders folder
+Data/exports/products_orders/*
+
+# But make sure the folder itself isn't completely ignored if needed
+!Data/exports/products_orders/
