@@ -1,8 +1,12 @@
 /stuff
 /mustafasstuff
 Data/exports/invoice/Luxe Organix Invoice-2.pdf
-# Ignore everything inside the products_orders folder
-Data/exports/products_orders/*
+# Ignore everything inside exports entirely by default
+# Ignore everything inside exports entirely
+Data/exports/*
 
-# But make sure the folder itself isn't completely ignored if needed
+# But explicitly allow the folders and .gitkeep files
+!Data/exports/invoice/
+!Data/exports/invoice/.gitkeep
 !Data/exports/products_orders/
+!Data/exports/products_orders/.gitkeep
