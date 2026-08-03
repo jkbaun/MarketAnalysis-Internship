@@ -13,11 +13,28 @@ python -m venv venv
 
 venv\Scripts\activate
 
-
 pip install -r requirements.txt
 playwright install chromium
 ```
 
+---
+## Usage Guides
+`orchestrate.py` handles the entire pipeline from scrapping to reports generation, adjustments can be made accordingly thru `*_config.json` files
+
+### Scraping Operation
+- You can either choose to run the full pipeline + report generation through orchestrate (can be toggled)
+- If you wish to just scrape specific competitors, refer to `Competiton/1_Scrape`
+- `master-v2.py` will handle all the `products.json` and `stock-* scripts`, otherwise just run `stock-*` for the specific company
+```bash
+    "scraping_performance":
+        "batch_size": HOW MUCH PAGES WE RUN THROUGH,
+        "concurrent_tasks": AMOUNT OF PRODUCTS PER LOOP,
+        "max_retries": MAXIMUM ATTEMPTS,
+        "tcp_limit_per_host": MAXIUM REQUESTS PER PAGE,
+        "headless_browser": true,
+        "dom_timeout_ms": HOW LONG TO WAIT BEFORE CANCELLING EACH PRODUCT
+```
+Scrappers append all data + product change details to `Data/scraped`. Suggest running the script atleast once per day or a couple times incase it failed to fetch it on the first run. 
 
 ---
 
