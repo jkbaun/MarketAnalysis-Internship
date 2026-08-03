@@ -1,6 +1,4 @@
-Here is the raw Markdown format so you can easily copy and paste it directly into your project.
 
-```markdown
 # 🛒 E-Commerce Intelligence & Inventory Orchestrator
 
 An end-to-end automated pipeline designed for e-commerce data scraping, inventory reconciliation, entity resolution, and executive reporting. This system coordinates multi-competitor price/stock tracking, parses internal sales orders and supplier invoice PDFs, unifies databases using fuzzy matching, and generates automated financial and inventory audit reports.
@@ -15,14 +13,13 @@ An end-to-end automated pipeline designed for e-commerce data scraping, inventor
 > 2. **DO NOT** execute scripts outside the root working directory. All relative paths are mapped from the orchestrator directory.
 
 ---
-
+```
 ## 🚀 Usage
 
 Run the master pipeline orchestrator directly from the root directory:
 
 ```bash
 python orchestrate.py
-
 ```
 
 Upload Orders and Products export data to Data/products_orders
