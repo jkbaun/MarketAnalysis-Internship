@@ -1,0 +1,42 @@
+name: Daily Scraper
+
+on:
+  schedule:
+    - cron: '0 */6 * * *' # Runs every 6 hours
+  workflow_dispatch: # Adds a button to run it manually
+
+# Required to allow the bot to push commits back to the repo
+permissions:
+  contents: write
+
+jobs:
+  scrape-and-update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+          
+      # CRITICAL FIX: Install Playwright browser binaries and system dependencies
+      - name: Install Playwright Browsers
+        run: playwright install chromium --with-deps
+          
+      - name: Run scraper pipeline
+        # Added a timeout to prevent runaway jobs from burning Action minutes
+        timeout-minutes: 45 
+        run: python Competiton/1_Scrape/master-v2.py
+        
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "actions@github.com"
+          git add .
+          git commit -m "Automated data pipeline update" || echo "No changes to commit"
+          git push
