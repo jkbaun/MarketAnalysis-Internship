@@ -19,7 +19,7 @@
     },
     "scraping_performance": {
         "batch_size": 5,
-        "concurrent_tasks": 15,
+        "concurrent_tasks": 5,
         "max_retries": 5,
         "tcp_limit_per_host": 10,
         "headless_browser": true,
