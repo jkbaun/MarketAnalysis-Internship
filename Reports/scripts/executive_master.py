@@ -10,7 +10,7 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 PIPELINE_ROOT = SCRIPT_DIR.parents[1] if len(SCRIPT_DIR.parents) >= 2 else SCRIPT_DIR
 
 DB_DIR = PIPELINE_ROOT / "Data" / "databases"
-BBK_DB = DB_DIR / "beautybykat_inventory.db"
+BBK_DB = DB_DIR / "beautybykat_inventory.db" # Remove on refactor: (keep site-specific URL here)
 COMP_DB = DB_DIR / "master_competitor.db"
 
 OUTPUT_DIR = PIPELINE_ROOT / "Reports" / "output"

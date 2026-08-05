@@ -17,7 +17,8 @@ args, _ = parser.parse_known_args()
 CONCURRENT_TASKS = args.tasks
 MAX_RETRIES = args.retries
 
-base_url = "https://glowinbh.com"
+base_url = "https://glowinbh.com" # Remove on refactor: (keep site-specific URL here)
+# Pass from Config file
 stock_filename, products_filename = helper.generate_filenames(base_url)
 PROGRESS_FILE = stock_filename
 

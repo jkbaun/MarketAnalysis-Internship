@@ -7,6 +7,8 @@ from pathlib import Path
 from datetime import datetime, timedelta
 from rapidfuzz import fuzz
 
+#RENAME ON REFACTOR
+
 # =====================================================================
 # LOGGING & DYNAMIC PATH RESOLUTION
 # =====================================================================
@@ -29,9 +31,9 @@ PIPELINE_ROOT = find_pipeline_root(SCRIPT_DIR)
 
 # Directories & Database Paths
 DB_DIR = PIPELINE_ROOT / "Data" / "databases"
-BBK_DB = DB_DIR / "beautybykat_inventory.db"
+BBK_DB = DB_DIR / "beautybykat_inventory.db" # Remove on refactor: (keep site-specific URL here)
 COMP_DB = DB_DIR / "master_competitor.db"
-GLOWIN_CSV_FALLBACK = PIPELINE_ROOT / "Data" / "glowinbh_stock.csv"
+GLOWIN_CSV_FALLBACK = PIPELINE_ROOT / "Data" / "glowinbh_stock.csv" # Remove on refactor: (keep site-specific URL here)
 
 OUTPUT_DIR = PIPELINE_ROOT / "Reports" / "output"
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)

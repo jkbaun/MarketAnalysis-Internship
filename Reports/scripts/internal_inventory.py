@@ -13,7 +13,7 @@ PIPELINE_ROOT = SCRIPT_DIR.parents[1] if len(SCRIPT_DIR.parents) >= 2 else SCRIP
 
 # Define relative data and database paths
 DB_DIR = PIPELINE_ROOT / "Data" / "databases"
-BBK_DB = DB_DIR / "beautybykat_inventory.db"
+BBK_DB = DB_DIR / "beautybykat_inventory.db" # Remove on refactor: (keep site-specific URL here)
 
 # Define output directory and file path
 OUTPUT_DIR = PIPELINE_ROOT / "Reports" / "output"

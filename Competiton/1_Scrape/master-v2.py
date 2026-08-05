@@ -128,5 +128,7 @@ def run_scraping_pipeline(config=None, script_dir=None, data_dir=None):
 
 
 if __name__ == "__main__":
+    import sys
     # Allows you to still test this file directly from terminal
-    run_scraping_pipeline()
+    success = run_scraping_pipeline()
+    sys.exit(0 if success else 1)

@@ -97,9 +97,3 @@ def ingest_orders(csv_filepath, date_str=None):
         print(f"❌ Error during ingestion: {e}")
     finally:
         session.close()
-
-if __name__ == "__main__":
-    # Example execution 
-    ingest_orders("orders_Jan1-July12.csv")
-    ingest_orders("orders_June28-July9th.csv")
-    ingest_orders("orders_July9th-July16th.csv")

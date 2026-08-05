@@ -1,7 +1,7 @@
 {
     "mode": "",
 
-    "audit_inventory": true,
+    "audit_inventory": false,
     "order_files": [
         "orders_Jan1-July12.csv",
         "orders_June28-July9th.csv",
@@ -19,7 +19,7 @@
     "competitors": ["glowin", "sokostore", "xbeauty"],
     "export_formats": ["xlsx", "csv"],
     "reports": {
-        "inventory_audit": true,
+        "inventory_audit": false,
         "sales_summary": true,
         "competitor_price_stock": true,
         "low_stock_alerts": true,

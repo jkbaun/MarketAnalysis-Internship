@@ -221,8 +221,3 @@ def ingest_products(csv_filepath, snapshot_date_str):
         print(f"❌ Error during ingestion: {e}")
     finally:
         session.close()
-
-if __name__ == "__main__":
-    ingest_products("Inventory/export/products_june18.csv", "2026-06-18")
-    ingest_products("Inventory/export/products_July9th.csv", "2026-07-09")
-    ingest_products("Inventory/export/products_July16th.csv", "2026-07-16")

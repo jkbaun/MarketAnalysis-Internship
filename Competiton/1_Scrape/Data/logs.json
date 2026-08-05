@@ -12728,5 +12728,166 @@
         "url": "https://glowinbh.com/products/skin-focus-high-coverage-powder-foundation",
         "status_code": null,
         "error": "Stock data absent from DOM script tag and window.REZ_DATA"
+    },
+    {
+        "timestamp": "2026-08-03T22:23:57.036220",
+        "stage": "STOCK_SCRAPE",
+        "url": "https://xbeauty.me/products/imsole-the-naif-emulsion-perfume-40g",
+        "status_code": null,
+        "error": "Page.goto: Navigation to \"https://xbeauty.me/products/imsole-the-naif-emulsion-perfume-40g\" is interrupted by another navigation to \"https://xbeauty.me/products/imsole-the-naif-emulsion-perfume-40g\"\nCall log:\n  - navigating to \"https://xbeauty.me/products/imsole-the-naif-emulsion-perfume-40g\", waiting until \"domcontentloaded\"\n"
+    },
+    {
+        "timestamp": "2026-08-03T22:23:57.099421",
+        "stage": "STOCK_SCRAPE",
+        "url": "https://xbeauty.me/products/imsole-the-noiseless-eau-de-parfum-030ml",
+        "status_code": null,
+        "error": "Page.goto: Navigation to \"https://xbeauty.me/products/imsole-the-noiseless-eau-de-parfum-030ml\" is interrupted by another navigation to \"https://xbeauty.me/products/imsole-the-noiseless-eau-de-parfum-030ml\"\nCall log:\n  - navigating to \"https://xbeauty.me/products/imsole-the-noiseless-eau-de-parfum-030ml\", waiting until \"domcontentloaded\"\n"
+    },
+    {
+        "timestamp": "2026-08-03T22:23:57.269931",
+        "stage": "STOCK_SCRAPE",
+        "url": "https://xbeauty.me/products/imsole-beautiul-sinner-emulsion-perfume-40g",
+        "status_code": null,
+        "error": "Page.goto: Navigation to \"https://xbeauty.me/products/imsole-beautiul-sinner-emulsion-perfume-40g\" is interrupted by another navigation to \"https://xbeauty.me/products/imsole-beautiul-sinner-emulsion-perfume-40g\"\nCall log:\n  - navigating to \"https://xbeauty.me/products/imsole-beautiul-sinner-emulsion-perfume-40g\", waiting until \"domcontentloaded\"\n"
+    },
+    {
+        "timestamp": "2026-08-04T12:50:02.111040",
+        "stage": "STOCK_SCRAPE",
+        "url": "https://glowinbh.com/products/no-9-nad-collagen-under-eye-patches-5ea",
+        "status_code": null,
+        "error": "Stock data absent from DOM script tag and window.REZ_DATA"
+    },
+    {
+        "timestamp": "2026-08-04T12:50:03.169014",
+        "stage": "STOCK_SCRAPE",
+        "url": "https://glowinbh.com/products/no-2-rose-pdrn-collagen-plumping-serum-30ml",
+        "status_code": null,
+        "error": "Stock data absent from DOM script tag and window.REZ_DATA"
+    },
+    {
+        "timestamp": "2026-08-04T18:34:03.384809",
+        "stage": "STOCK_SCRAPE",
+        "url": "https://xbeauty.me/products/msq-gilt-small-eyeshadow-brush-l119",
+        "status_code": null,
+        "error": "Page.goto: Timeout 15000ms exceeded.\nCall log:\n  - navigating to \"https://xbeauty.me/products/msq-gilt-small-eyeshadow-brush-l119\", waiting until \"domcontentloaded\"\n"
+    },
+    {
+        "timestamp": "2026-08-05T12:03:07.501057",
+        "stage": "STOCK_SCRAPE",
+        "url": "https://glowinbh.com/products/kojic-acid-turmeric-niacinamide-serum-30ml",
+        "status_code": null,
+        "error": "Stock data absent from DOM script tag and window.REZ_DATA"
+    },
+    {
+        "timestamp": "2026-08-05T12:05:20.240547",
+        "stage": "STOCK_SCRAPE",
+        "url": "https://glowinbh.com/products/swimming-pool-toner-pads-70-pads",
+        "status_code": null,
+        "error": "Stock data absent from DOM script tag and window.REZ_DATA"
+    },
+    {
+        "timestamp": "2026-08-05T15:16:42.254648",
+        "stage": "STOCK_SCRAPE",
+        "url": "https://xbeauty.me/products/perfumed-keyth-home-fragrance-dropped-pearl",
+        "status_code": null,
+        "error": "Page.goto: Timeout 15000ms exceeded.\nCall log:\n  - navigating to \"https://xbeauty.me/products/perfumed-keyth-home-fragrance-dropped-pearl\", waiting until \"domcontentloaded\"\n"
+    },
+    {
+        "timestamp": "2026-08-05T15:16:42.546368",
+        "stage": "STOCK_SCRAPE",
+        "url": "https://xbeauty.me/products/perfumed-keyth-hand-cream",
+        "status_code": null,
+        "error": "Page.goto: Timeout 15000ms exceeded.\nCall log:\n  - navigating to \"https://xbeauty.me/products/perfumed-keyth-hand-cream\", waiting until \"domcontentloaded\"\n"
+    },
+    {
+        "timestamp": "2026-08-05T15:16:45.331407",
+        "stage": "STOCK_SCRAPE",
+        "url": "https://xbeauty.me/products/colored-keyth-california-feather-like-cushion",
+        "status_code": null,
+        "error": "Page.goto: Timeout 15000ms exceeded.\nCall log:\n  - navigating to \"https://xbeauty.me/products/colored-keyth-california-feather-like-cushion\", waiting until \"domcontentloaded\"\n"
+    },
+    {
+        "timestamp": "2026-08-05T15:16:46.701126",
+        "stage": "STOCK_SCRAPE",
+        "url": "https://xbeauty.me/products/colored-keyth-pink-flower-tone-up-primer",
+        "status_code": null,
+        "error": "Page.goto: Timeout 15000ms exceeded.\nCall log:\n  - navigating to \"https://xbeauty.me/products/colored-keyth-pink-flower-tone-up-primer\", waiting until \"domcontentloaded\"\n"
+    },
+    {
+        "timestamp": "2026-08-05T15:16:52.750788",
+        "stage": "STOCK_SCRAPE",
+        "url": "https://xbeauty.me/products/perfumed-keyth-eau-de-parfum-hipnotic",
+        "status_code": null,
+        "error": "Page.goto: Timeout 15000ms exceeded.\nCall log:\n  - navigating to \"https://xbeauty.me/products/perfumed-keyth-eau-de-parfum-hipnotic\", waiting until \"domcontentloaded\"\n"
+    },
+    {
+        "timestamp": "2026-08-05T15:18:15.949920",
+        "stage": "STOCK_SCRAPE",
+        "url": "https://xbeauty.me/products/sheglam-sun-sculpt-liquid-contour",
+        "status_code": null,
+        "error": "Page.goto: Timeout 15000ms exceeded.\nCall log:\n  - navigating to \"https://xbeauty.me/products/sheglam-sun-sculpt-liquid-contour\", waiting until \"domcontentloaded\"\n"
+    },
+    {
+        "timestamp": "2026-08-05T15:18:16.058099",
+        "stage": "STOCK_SCRAPE",
+        "url": "https://xbeauty.me/products/sheglam-insta-ready-face-under-eye-setting-powder-duo",
+        "status_code": null,
+        "error": "Page.goto: Timeout 15000ms exceeded.\nCall log:\n  - navigating to \"https://xbeauty.me/products/sheglam-insta-ready-face-under-eye-setting-powder-duo\", waiting until \"domcontentloaded\"\n"
+    },
+    {
+        "timestamp": "2026-08-05T15:18:17.334075",
+        "stage": "STOCK_SCRAPE",
+        "url": "https://xbeauty.me/products/tsubaki-premium-moist-repair-conditioner-490ml",
+        "status_code": null,
+        "error": "Page.goto: Timeout 15000ms exceeded.\nCall log:\n  - navigating to \"https://xbeauty.me/products/tsubaki-premium-moist-repair-conditioner-490ml\", waiting until \"domcontentloaded\"\n"
+    },
+    {
+        "timestamp": "2026-08-05T15:18:20.081607",
+        "stage": "STOCK_SCRAPE",
+        "url": "https://xbeauty.me/products/sheglam-jelly-wow-hydrating-lip-oil",
+        "status_code": null,
+        "error": "Page.goto: Timeout 15000ms exceeded.\nCall log:\n  - navigating to \"https://xbeauty.me/products/sheglam-jelly-wow-hydrating-lip-oil\", waiting until \"domcontentloaded\"\n"
+    },
+    {
+        "timestamp": "2026-08-05T15:18:24.966267",
+        "stage": "STOCK_SCRAPE",
+        "url": "https://xbeauty.me/products/sheglam-sun-beam-matte-liquid-bronzer",
+        "status_code": null,
+        "error": "Page.goto: Timeout 15000ms exceeded.\nCall log:\n  - navigating to \"https://xbeauty.me/products/sheglam-sun-beam-matte-liquid-bronzer\", waiting until \"domcontentloaded\"\n"
+    },
+    {
+        "timestamp": "2026-08-05T15:19:50.946759",
+        "stage": "STOCK_SCRAPE",
+        "url": "https://xbeauty.me/products/sheglam-brows-on-demand-2-in-1-brow-pencil",
+        "status_code": null,
+        "error": "Page.goto: Timeout 15000ms exceeded.\nCall log:\n  - navigating to \"https://xbeauty.me/products/sheglam-brows-on-demand-2-in-1-brow-pencil\", waiting until \"domcontentloaded\"\n"
+    },
+    {
+        "timestamp": "2026-08-05T15:19:51.753891",
+        "stage": "STOCK_SCRAPE",
+        "url": "https://xbeauty.me/products/sheglam-matte-allure-mini-liquid-lipstick-set",
+        "status_code": null,
+        "error": "Page.goto: Timeout 15000ms exceeded.\nCall log:\n  - navigating to \"https://xbeauty.me/products/sheglam-matte-allure-mini-liquid-lipstick-set\", waiting until \"domcontentloaded\"\n"
+    },
+    {
+        "timestamp": "2026-08-05T15:19:51.961022",
+        "stage": "STOCK_SCRAPE",
+        "url": "https://xbeauty.me/products/sheglam-glow-bloom-liquid-highlighter",
+        "status_code": null,
+        "error": "Page.goto: Timeout 15000ms exceeded.\nCall log:\n  - navigating to \"https://xbeauty.me/products/sheglam-glow-bloom-liquid-highlighter\", waiting until \"domcontentloaded\"\n"
+    },
+    {
+        "timestamp": "2026-08-05T15:19:55.312265",
+        "stage": "STOCK_SCRAPE",
+        "url": "https://xbeauty.me/products/sheglam-complexion-boost-concealer",
+        "status_code": null,
+        "error": "Page.goto: Timeout 15000ms exceeded.\nCall log:\n  - navigating to \"https://xbeauty.me/products/sheglam-complexion-boost-concealer\", waiting until \"domcontentloaded\"\n"
+    },
+    {
+        "timestamp": "2026-08-05T15:20:41.683666",
+        "stage": "STOCK_SCRAPE",
+        "url": "https://xbeauty.me/products/sheglam-like-magic-12hr-full-coverage-concealer",
+        "status_code": null,
+        "error": "Page.goto: Timeout 15000ms exceeded.\nCall log:\n  - navigating to \"https://xbeauty.me/products/sheglam-like-magic-12hr-full-coverage-concealer\", waiting until \"domcontentloaded\"\n"
     }
 ]

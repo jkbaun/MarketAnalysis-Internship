@@ -24,7 +24,7 @@ DB_DIR = PIPELINE_DIR / "Data" / "databases"
 DB_DIR.mkdir(parents=True, exist_ok=True)
 
 # Build the final SQLite URL
-DB_PATH = DB_DIR / "beautybykat_inventory.db"
+DB_PATH = DB_DIR / "beautybykat_inventory.db"  # Remove on refactor: (keep site-specific URL here)
 SQLALCHEMY_DATABASE_URL = f"sqlite:///{DB_PATH}"
 
 # ==========================================

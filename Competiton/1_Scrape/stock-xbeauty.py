@@ -8,9 +8,11 @@ from datetime import datetime
 import helper
 import argparse
 
+import time
+
 # Parse incoming arguments passed by master-v2.py or fallback to defaults
 parser = argparse.ArgumentParser()
-parser.add_argument("--tasks", type=int, default=20, help="Concurrent Playwright workers")
+parser.add_argument("--tasks", type=int, default=5, help="Concurrent Playwright workers")
 parser.add_argument("--retries", type=int, default=5, help="Max retry attempts per product")
 args, _ = parser.parse_known_args()
 
@@ -161,6 +163,8 @@ async def scrape_product(page, product, full_catalog=True):
     return url, item_info
 
 async def main():
+    start_time = time.perf_counter()
+
     async with async_playwright() as p:
         browser = await p.chromium.launch(headless=True)
         context = await browser.new_context(user_agent=helper.random_context())
@@ -186,30 +190,35 @@ async def main():
             await queue.put(p_item)
 
         async def worker():
-            while not queue.empty():
-                page = await context.new_page()
-                for _ in range(5):
-                    try:
-                        product = queue.get_nowait()
-                    except asyncio.QueueEmpty:
-                        break # Exit the 5-item loop if queue is empty
+            while True:
+                try:
+                    product = queue.get_nowait()
+                except asyncio.QueueEmpty:
+                    break # Genuinely empty, exit worker cleanly
 
+                page = await context.new_page()
+                try:
                     res = await scrape_product(page, product)
                     if res:
                         url, item_info = res
                         scraped_data[url] = item_info
-                        # --- FIX 3: Save immediately after every successful item ---
-                        await save_progress()
+                        await save_progress() # Save immediately per item
+                except Exception as e:
+                    print(f"Worker execution error: {e}")
+                finally:
+                    await page.close()
 
-                await page.close()
-                await asyncio.sleep(random.uniform(2.0, 4.0))
-                
+                await asyncio.sleep(random.uniform(2.0, 4.0))        
         # Launch permanent workers concurrently based on argparse
         workers = [worker() for _ in range(CONCURRENT_TASKS)]
         await asyncio.gather(*workers)
         
         await browser.close()
-        print("\nProcess fully complete!")
+
+        elapsed_seconds = time.perf_counter() - start_time
+        minutes = int(elapsed_seconds // 60)
+        seconds = int(elapsed_seconds % 60)
+        print(f"\nProcess fully complete! Elapsed time: {minutes}m {seconds}s")
 
 # Run the async loop
 if __name__ == "__main__":

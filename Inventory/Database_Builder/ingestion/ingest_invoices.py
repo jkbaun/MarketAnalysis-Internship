@@ -113,11 +113,3 @@ def ingest_invoice_text(txt_filepath, invoice_number="000000000", manual_date_st
     finally:
         session.close()
 
-if __name__ == "__main__":
-    # Save the text from Luxe Organix Invoice-2.pdf into a file named 'invoice_600000007.txt'
-    # Provide the manual date since it was omitted from the PDF
-    ingest_invoice_text(
-        txt_filepath="Inventory/Data/exports/Luxe Organix Invoice-2.pdf", 
-        invoice_number="600000007", 
-        manual_date_str="1999-01-01" 
-    )

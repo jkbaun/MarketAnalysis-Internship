@@ -16,7 +16,8 @@ args, _ = parser.parse_known_args()
 CONCURRENT_TASKS = args.tasks
 MAX_RETRIES = args.retries
 
-base_url = "https://sokostore.com"  # (keep site-specific URL here)
+base_url = "https://sokostore.com"  # Remove on refactor, pass thru config file (keep site-specific URL here)
+
 stock_filename, products_filename = helper.generate_filenames(base_url)
 PROGRESS_FILE = stock_filename
 # Load products

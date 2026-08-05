@@ -1,7 +1,7 @@
 {
     "scrapper": {
         "rerun": "false",
-        "last_run": "2026-08-02T13:55:23.039911",
+        "last_run": "2026-08-03T22:39:17.510294",
         "master_scraper": "scraper.py",
         "stock_scripts": [
             "stock-soko.py",
@@ -19,7 +19,7 @@
     },
     "scraping_performance": {
         "batch_size": 5,
-        "concurrent_tasks": 50,
+        "concurrent_tasks": 15,
         "max_retries": 5,
         "tcp_limit_per_host": 10,
         "headless_browser": true,
