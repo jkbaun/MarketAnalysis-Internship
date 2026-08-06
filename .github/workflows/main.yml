@@ -29,10 +29,8 @@ jobs:
         run: playwright install chromium --with-deps
           
       - name: Run scraper pipeline
-        # Added a timeout to prevent runaway jobs from burning Action minutes
-        timeout-minutes: 45 
         run: python Competiton/1_Scrape/master-v2.py
-        
+    
       - name: Commit and push changes
         run: |
           git config --global user.name "GitHub Actions Bot"
